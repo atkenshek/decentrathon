@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Курсы</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        .Main {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .scrollmenu {
+            background-color: #333;
+            overflow: auto;
+            white-space: nowrap;
+            padding: 10px 0;
+        }
+
+        .scrollmenu a {
+            display: inline-block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .scrollmenu a:hover {
+            background-color: #777;
+        }
+
+        .course-list {
+            display: flex;
+            overflow-x: hidden;
+            padding-bottom: 10px;
+            scroll-behavior: smooth;
+            margin-top: 40px;
+            width: 100%;
+        }
+
+        .course {
+            width: 80%;
+            min-width: 250px;
+            margin: 15px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .course-info {
+            flex-grow: 1;
+        }
+
+        .course-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .course-description {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .course-button {
+            padding: 10px 15px;
+            background-color: #2e7d32;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            margin-right: 10px;
+        }
+
+        .course-button:hover {
+            background-color: #1b5e20;
+        }
+
+        .course-button:disabled {
+            background-color: #bdbdbd;
+            cursor: not-allowed;
+        }
+
+        .menu {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 60px;
+            background-color: #2e2e2e;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 2px solid #ddd;
+        }
+
+        .menu-item {
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            flex-grow: 1;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .menu-item:hover {
+            background-color: #444;
+        }
+
+        .menu-item i {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <div class="Main">
+        <!-- Горизонтальный скролл меню -->
+        <div class="scrollmenu">
+            <a href="#basic">Базовый курс</a>
+            <a href="#linea">Linea</a>
+            <a href="#arbitrum">Arbitrum</a>
+            <a href="#zksync">zkSync</a>
+        </div>
+
+        <!-- Горизонтальный список курсов -->
+        <div class="course-list" id="course-list">
+
+            <!-- Базовый курс -->
+            <div class="course" id="basic">
+                <div class="course-info">
+                    <div class="course-title">Базовый курс</div>
+                    <div class="course-description">Изучите основы блокчейна и криптовалют.</div>
+                </div>
+                <div class="button-group">
+                    <!-- Кнопка Пройден -->
+                    <button class="course-button" disabled>Пройден</button>
+                    <!-- Кнопка Тест -->
+                    <a href="/course/basic-test" class="course-button">Тест</a>
+                </div>
+            </div>
+
+            <!-- Linea курс -->
+            <div class="course" id="linea">
+                <div class="course-info">
+                    <div class="course-title">Linea</div>
+                    <div class="course-description">Курс по Layer-2 решениям и экосистеме Linea.</div>
+                </div>
+                <a href="/course/linea" class="course-button">Начать курс</a>
+            </div>
+
+            <!-- Arbitrum курс -->
+            <div class="course" id="arbitrum">
+                <div class="course-info">
+                    <div class="course-title">Arbitrum</div>
+                    <div class="course-description">Узнайте, как работает платформа Arbitrum.</div>
+                </div>
+                <a href="/course/arbitrum" class="course-button">Начать курс</a>
+            </div>
+
+            <!-- zkSync курс -->
+            <div class="course" id="zksync">
+                <div class="course-info">
+                    <div class="course-title">zkSync</div>
+                    <div class="course-description">Откройте для себя технологии zk-rollups с zkSync.</div>
+                </div>
+                <a href="/course/zksync" class="course-button">Начать курс</a>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="menu">
+        <a href="/courses" class="menu-item">
+            <i class="fas fa-graduation-cap"></i>
+            Курсы
+        </a>
+        <a href="/" class="menu-item">
+            <i class="fas fa-user"></i>
+            Профиль
+        </a>
+        <a href="/rating" class="menu-item">
+            <i class="fas fa-cogs"></i>
+            Рейтинг
+        </a>
+        <a href="/settings" class="menu-item">
+            <i class="fas fa-cogs"></i>
+            Настройки
+        </a>
+    </div>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+</body>
+</html>

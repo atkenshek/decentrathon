@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Настройки</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            padding: 20px;
+            margin: 0;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .button {
+            background-color: #2e7d32;
+            color: white;
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #1b5e20;
+        }
+
+        .button:disabled {
+            background-color: #bdbdbd;
+            cursor: not-allowed;
+        }
+
+        .menu {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 60px;
+            background-color: #2e2e2e;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 2px solid #ddd;
+        }
+
+        .menu-item {
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            flex-grow: 1;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .menu-item:hover {
+            background-color: #444;
+        }
+
+        .menu-item i {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        #wallet-status, #withdraw-status, #sponsor-info {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        #sponsor-info {
+            color: #2e7d32;
+            display: none;
+        }
+    </style>
+    <script>
+        function connectWallet() {
+            document.getElementById('wallet-status').innerText = 'Кошелек успешно подключен!';
+            document.getElementById('connect-button').disabled = true;
+        }
+
+        function withdrawFunds() {
+            if (document.getElementById('connect-button').disabled) {
+                document.getElementById('withdraw-status').innerText = 'Средства успешно выведены!';
+            } else {
+                document.getElementById('withdraw-status').innerText = 'Подключите кошелек, чтобы вывести средства.';
+            }
+        }
+
+        function becomeSponsor() {
+            // Показываем информацию для потенциальных спонсоров
+            document.getElementById('sponsor-info').style.display = 'block';
+            document.getElementById('sponsor-info').innerText = 'Для того чтобы стать спонсором и добавлять курсы, свяжитесь с нами по адресу: sponsor@web3platform.com.';
+        }
+    </script>
+</head>
+<body>
+
+    <h1>Настройки</h1>
+
+    <div class="button-container">
+        <button class="button" id="connect-button" onclick="connectWallet()">Подключить кошелек</button>
+        <button class="button" onclick="withdrawFunds()">Вывести средства</button>
+        <button class="button" onclick="becomeSponsor()">Стать спонсором</button>
+    </div>
+
+    <!-- Статусы -->
+    <div id="wallet-status"></div>
+    <div id="withdraw-status"></div>
+    <div id="sponsor-info"></div>
+
+   <!-- Нижнее меню -->
+   <div class="menu">
+    <a href="/courses" class="menu-item">
+        <i class="fas fa-graduation-cap"></i>
+        Курсы
+    </a>
+    <a href="/" class="menu-item">
+        <i class="fas fa-user"></i>
+        Профиль
+    </a>
+    <a href="/rating" class="menu-item">
+        <i class="fas fa-cogs"></i>
+        Рейтинг
+    </a>
+    <a href="/settings" class="menu-item">
+        <i class="fas fa-cogs"></i>
+        Настройки
+    </a>
+    </div>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+</body>
+</html>

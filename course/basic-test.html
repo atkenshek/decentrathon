@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест по базовому курсу</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .back-button {
+            background-color: #2e7d32;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #1b5e20;
+        }
+
+        .test-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .question {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .answers {
+            list-style-type: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+
+        .answers li {
+            margin-bottom: 10px;
+        }
+
+        .answer-label {
+            font-size: 16px;
+        }
+
+        .submit-button {
+            background-color: #2e7d32;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-button:hover {
+            background-color: #1b5e20;
+        }
+
+        .rate-button {
+            background-color: #ff9800;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-left: 10px;
+            display: none;
+        }
+
+        .rate-button:hover {
+            background-color: #e68900;
+        }
+
+        .rating-modal {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        .stars-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .star-rating {
+            font-size: 36px;
+            color: #ccc;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .star-rating:hover,
+        .star-rating.selected {
+            color: #ffd700;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 16px;
+            white-space: pre-line;
+        }
+
+        .writing-effect {
+            border-left: 3px solid #333;
+            padding-left: 10px;
+            font-family: monospace;
+            font-size: 16px;
+            white-space: pre-line;
+        }
+
+        /* Анимация создания контракта */
+        .contract-animation {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e0f7fa;
+            color: #00796b;
+            border: 2px solid #004d40;
+            border-radius: 8px;
+            display: none;
+        }
+
+        #loading {
+            width: 0;
+            height: 4px;
+            background-color: #2e7d32;
+            margin-top: 10px;
+            animation: loadingAnimation 3s ease-out forwards;
+        }
+
+        @keyframes loadingAnimation {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+    </style>
+    <script>
+        let selectedRating = 0;
+
+        // Печать объяснения ответа
+        function typeText(text, elementId) {
+            let index = 0;
+            const element = document.getElementById(elementId);
+            element.classList.add('writing-effect');
+            element.textContent = '';
+
+            function type() {
+                if (index < text.length) {
+                    element.textContent += text.charAt(index);
+                    index++;
+                    setTimeout(type, 50);
+                }
+            }
+            type();
+        }
+
+        // Завершение теста
+        function submitTest() {
+            const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+            const resultElement = document.getElementById('result');
+            const rateButton = document.getElementById('rate-button');
+            const contractAnimation = document.getElementById('contract-animation');
+            const contractText = document.getElementById('contract-text');
+            const loadingBar = document.getElementById('loading');
+
+            if (!selectedAnswer) {
+                resultElement.innerHTML = 'Пожалуйста, выберите один из вариантов ответа.';
+                return;
+            }
+
+            if (selectedAnswer.value === 'correct') {
+                resultElement.innerHTML = 'Ответ правильный! Вы успешно прошли тест.';
+                rateButton.style.display = 'inline-block'; // Показываем кнопку "Оценить курс"
+                contractAnimation.style.display = 'block'; // Показываем анимацию контракта
+                loadingBar.style.display = 'block'; // Отображаем полосу загрузки
+
+                setTimeout(() => {
+                    contractText.innerHTML = `// SPDX-License-Identifier: MIT<br>
+                    pragma solidity ^0.8.0;<br><br>
+                    contract RewardToken {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;string public reward = "Вы получили 10 токенов!";<br>
+                    }`;
+                }, 3000); // Плавная задержка в 3 секунды для имитации создания контракта
+            } else {
+                resultElement.innerHTML = '';
+                typeText('AI bot: Ответ неверный. Блокчейн — это распределенная база данных, которая хранит информацию в защищенном и неизменяемом виде.', 'result');
+            }
+        }
+
+        // Открытие окна для оценки
+        function openRatingModal() {
+            document.getElementById('rating-modal').style.display = 'block';
+        }
+
+        // Закрытие окна после сохранения
+        function saveRating() {
+            document.getElementById('rating-modal').style.display = 'none'; // Просто закрываем окно без сообщения
+        }
+
+        // Выбор рейтинга слева направо
+        function selectRating(stars) {
+            selectedRating = stars;
+            const starsElements = document.querySelectorAll('.star-rating');
+            starsElements.forEach((star, index) => {
+                if (index < stars) {
+                    star.classList.add('selected');
+                } else {
+                    star.classList.remove('selected');
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+
+    <div class="header">
+        <a href="/courses" class="back-button">Назад к курсам</a>
+    </div>
+
+    <div class="test-container">
+        <h2>Тест по базовому курсу</h2>
+
+        <div class="question">Что такое блокчейн?</div>
+
+        <ul class="answers">
+            <li>
+                <input type="radio" id="answer1" name="answer" value="correct">
+                <label for="answer1" class="answer-label">Распределенная база данных</label>
+            </li>
+            <li>
+                <input type="radio" id="answer2" name="answer" value="incorrect">
+                <label for="answer2" class="answer-label">Местный сервер для хранения данных</label>
+            </li>
+            <li>
+                <input type="radio" id="answer3" name="answer" value="incorrect">
+                <label for="answer3" class="answer-label">Централизованная система управления</label>
+            </li>
+        </ul>
+
+        <button class="submit-button" onclick="submitTest()">Закончить тест</button>
+        <button class="rate-button" id="rate-button" onclick="openRatingModal()">Оценить курс</button>
+
+        <div class="result" id="result"></div>
+
+        <!-- Имитация создания смарт-контракта -->
+        <div class="contract-animation" id="contract-animation">
+            <h3>Создание смарт-контракта...</h3>
+            <div id="loading"></div>
+            <p id="contract-text"></p>
+        </div>
+    </div>
+
+    <!-- Окно для оценки курса -->
+    <div class="rating-modal" id="rating-modal">
+        <h3>Оцените курс</h3>
+        <div class="stars-container">
+            <span class="star-rating" onclick="selectRating(1)">&#9733;</span>
+            <span class="star-rating" onclick="selectRating(2)">&#9733;</span>
+            <span class="star-rating" onclick="selectRating(3)">&#9733;</span>
+            <span class="star-rating" onclick="selectRating(4)">&#9733;</span>
+            <span class="star-rating" onclick="selectRating(5)">&#9733;</span>
+        </div>
+        <button class="submit-button" onclick="saveRating()">Сохранить</button>
+    </div>
+
+</body>
+</html>

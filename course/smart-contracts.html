@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Создания смарт-контракта</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        h2 {
+            color: #0066cc;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 16px;
+            color: #333;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        textarea {
+            height: 200px;
+            font-family: monospace;
+        }
+
+        button {
+            background-color: #2e7d32;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #1b5e20;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #0066cc;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back-button:hover {
+            background-color: #004b99;
+        }
+
+        .result-box {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e0f7fa;
+            border-left: 5px solid #00796b;
+            display: none;
+            animation: fadeIn 1.5s;
+        }
+
+        .loading {
+            display: none;
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #0066cc;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .progress-bar {
+            width: 100%;
+            background-color: #ddd;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .progress-bar-fill {
+            height: 20px;
+            width: 0%;
+            background-color: #2e7d32;
+            border-radius: 5px;
+            transition: width 2s;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Кнопка "Назад к профилю" -->
+    <a href="/" class="back-button">Назад к профилю</a>
+
+    <!-- Имитация смарт-контракта -->
+    <div class="profile-section" id="smart-contract-simulation">
+        <br>
+        <h2>Cоздания смарт-контракта</h2>
+        <p>Пройдите шаги по созданию своего первого смарт-контракта!</p>
+
+        <form id="contract-form">
+            <label for="contractName">Название контракта:</label><br>
+            <input type="text" id="contractName" name="contractName" value="MyFirstContract"><br>
+
+            <label for="contractCode">Код смарт-контракта:</label><br>
+            <textarea id="contractCode" name="contractCode">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract MyFirstContract {
+    string public message = "Hello, Blockchain!";
+}</textarea><br>
+
+            <button type="button" onclick="simulateContractCreation()">Создать контракт</button>
+        </form>
+
+        <div class="loading" id="loading">Создание контракта...</div>
+
+        <!-- Прогресс бар -->
+        <div class="progress-bar" id="progress-bar">
+            <div class="progress-bar-fill" id="progress-bar-fill"></div>
+        </div>
+
+        <!-- Результат -->
+        <div class="result-box" id="simulation-result">
+            <h3>Результат:</h3>
+            <p id="result-text"></p>
+        </div>
+    </div>
+
+    <script>
+        function simulateContractCreation() {
+            const contractName = document.getElementById('contractName').value;
+            const contractCode = document.getElementById('contractCode').value;
+
+            // Показываем анимацию загрузки
+            document.getElementById('loading').style.display = 'block';
+
+            // Анимация прогресс-бара
+            document.getElementById('progress-bar-fill').style.width = '0%';
+            document.getElementById('progress-bar').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('progress-bar-fill').style.width = '100%';
+            }, 100);
+
+            // Имитация времени на создание контракта
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none'; // скрыть "Создание контракта..."
+                document.getElementById('simulation-result').style.display = 'block'; // показать результат
+                document.getElementById('result-text').innerText = `Смарт-контракт "${contractName}" успешно создан! Код: ${contractCode}`;
+            }, 2500);
+        }
+    </script>
+
+</body>
+</html>

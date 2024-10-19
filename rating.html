@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Рейтинг</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f4f7;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #222;
+        }
+
+        /* Горизонтальное меню */
+        .scrollmenu {
+            overflow: auto;
+            white-space: nowrap;
+            background-color: #333;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .scrollmenu a {
+            display: inline-block;
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        .scrollmenu a:hover {
+            background-color: #777;
+        }
+
+        /* Стили для таблиц */
+        .table-container {
+            overflow-x: auto; /* Добавляем горизонтальный скролл для длинных таблиц */
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #2e7d32;
+            color: white;
+            font-size: 18px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        /* Стили для звездных рейтингов */
+        .star-rating {
+            color: #ffd700;
+            font-size: 18px;
+        }
+
+        /* Нижнее меню */
+        .menu {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 60px;
+            background-color: #2e2e2e;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 2px solid #ddd;
+        }
+
+        .menu-item {
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            flex-grow: 1;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .menu-item:hover {
+            background-color: #444;
+        }
+
+        .menu-item i {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        /* Адаптивность для мобильных устройств */
+        @media screen and (max-width: 600px) {
+            th, td {
+                padding: 8px 10px;
+            }
+
+            .scrollmenu a {
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+    <script>
+        function showContent(contentType) {
+            const ratingContent = document.getElementById('rating-content');
+            if (contentType === 'users') {
+                ratingContent.innerHTML = `
+                    <h2>Лучшие пользователи</h2>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>№</th>
+                                    <th>User</th>
+                                    <th>Очки</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Иван Иванов</td>
+                                    <td>1500</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Петр Петров</td>
+                                    <td>1200</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Ольга Смирнова</td>
+                                    <td>1000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            } else if (contentType === 'courses') {
+                ratingContent.innerHTML = `
+                    <h2>Лучшие курсы</h2>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>№</th>
+                                    <th>Название</th>
+                                    <th>Участники</th>
+                                    <th>Рейтинг</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Основы блокчейна</td>
+                                    <td>100</td>
+                                    <td>
+                                        <span class="star-rating">
+                                            &#9733;&#9733;&#9733;&#9733;&#9733;
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Введение в DeFi</td>
+                                    <td>80</td>
+                                    <td>
+                                        <span class="star-rating">
+                                            &#9733;&#9733;&#9733;&#9733;&#9734;
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Криптовалюты 101</td>
+                                    <td>60</td>
+                                    <td>
+                                        <span class="star-rating">
+                                            &#9733;&#9733;&#9733;&#9734;&#9734;
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            } else if (contentType === 'sponsors') {
+                ratingContent.innerHTML = `
+                    <h2>Лучшие спонсоры</h2>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>№</th>
+                                    <th>Название</th>
+                                    <th>Поддержанные курсы</th>
+                                    <th>Рейтинг спонсора</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Linea</td>
+                                    <td>5 курсов</td>
+                                    <td>
+                                        <span class="star-rating">
+                                            &#9733;&#9733;&#9733;&#9733;&#9734;
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Arbitrum</td>
+                                    <td>3 курса</td>
+                                    <td>
+                                        <span class="star-rating">
+                                            &#9733;&#9733;&#9733;&#9734;&#9734;
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>zkSync</td>
+                                    <td>2 курса</td>
+                                    <td>
+                                        <span class="star-rating">
+                                            &#9733;&#9733;&#9733;&#9734;&#9734;
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Рейтинг</h1>
+    </div>
+
+    <!-- Горизонтальное меню -->
+    <div class="scrollmenu">
+        <a href="javascript:void(0);" onclick="showContent('users')">Пользователи</a>
+        <a href="javascript:void(0);" onclick="showContent('courses')">Курсы</a>
+        <a href="javascript:void(0);" onclick="showContent('sponsors')">Спонсоры</a>
+    </div>
+
+    <!-- Контент с рейтингом -->
+    <div id="rating-content" class="rating-content">
+        <h2>Выберите категорию, чтобы увидеть данные рейтинга</h2>
+    </div>
+
+    <!-- Нижнее меню -->
+    <div class="menu">
+        <a href="/courses" class="menu-item">
+            <i class="fas fa-graduation-cap"></i>
+            Курсы
+        </a>
+        <a href="/" class="menu-item">
+            <i class="fas fa-user"></i>
+            Профиль
+        </a>
+        <a href="/rating" class="menu-item">
+            <i class="fas fa-cogs"></i>
+            Рейтинг
+        </a>
+        <a href="/settings" class="menu-item">
+            <i class="fas fa-cogs"></i>
+            Настройки
+        </a>
+    </div>
+
+    <!-- Подключение FontAwesome -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+</body>
+</html>
